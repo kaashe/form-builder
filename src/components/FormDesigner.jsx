@@ -125,32 +125,37 @@ const FormDesigner = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-blue-500 to-indigo-400 p-6">
-            <h1 className="text-3xl font-bold text-white text-center mb-8">Form Designer</h1>
-            <div className="flex gap-6">
+        <div className="min-h-screen bg-gradient-to-r from-blue-500 to-indigo-400 p-4 sm:p-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white text-center mb-6 sm:mb-8">Form Designer</h1>
+
+            {/* Main container - stack on mobile, side by side on tablet+ */}
+            <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
                 {/* Left Panel */}
-                <div className="w-1/3 bg-white p-6 rounded shadow-lg">
-                    <h2 className="text-xl font-bold mb-4">Add Fields</h2>
-                    <div className="flex flex-row flex-wrap gap-4 mb-6">
+                <div className="w-full lg:w-1/3 bg-white p-4 sm:p-6 rounded shadow-lg">
+                    <h2 className="text-lg sm:text-xl font-bold mb-4">Add Fields</h2>
+
+                    {/* Buttons container */}
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
                         <button
                             onClick={addTextField}
-                            className="flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                            className="flex items-center justify-center sm:justify-start bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto"
                         >
                             <FaTextHeight className="mr-2" /> Text Field
                         </button>
                         <button
                             onClick={addNumberField}
-                            className="flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                            className="flex items-center justify-center sm:justify-start bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto"
                         >
                             <ImSortNumbericDesc className="mr-2" /> Number Field
                         </button>
                         <button
                             onClick={addDropdownField}
-                            className="flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                            className="flex items-center justify-center sm:justify-start bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto"
                         >
                             <FaListUl className="mr-2" /> Dropdown
                         </button>
                     </div>
+
                     <input
                         type="text"
                         placeholder="Enter Form Title"
@@ -158,123 +163,136 @@ const FormDesigner = () => {
                         onChange={(e) => setHeading(e.target.value)}
                         className="w-full border border-gray-300 p-2 rounded mb-6"
                     />
-                    {fields.map((field, index) => (
-                        <div key={field.id} className="p-4 mb-4 border rounded shadow-sm relative">
-                            {field.type === "text" &&
-                                <>
-                                    <input
-                                        type="text"
-                                        placeholder="Field Name"
-                                        value={field.name}
-                                        onChange={(e) => updateField(field.id, "name", e.target.value)}
-                                        className="w-full border border-gray-300 p-2 rounded mb-3"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Field Label"
-                                        value={field.label}
-                                        onChange={(e) => updateField(field.id, "label", e.target.value)}
-                                        className="w-full border border-gray-300 p-2 rounded mb-3"
-                                    />
-                                </>
-                            }
-                            {field.type === "number" && (
-                                <>
-                                    <input
-                                        type="text"
-                                        placeholder="Field Name"
-                                        value={field.name}
-                                        onChange={(e) => updateField(field.id, "name", e.target.value)}
-                                        className="w-full border border-gray-300 p-2 rounded mb-3"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Field Label"
-                                        value={field.label}
-                                        onChange={(e) => updateField(field.id, "label", e.target.value)}
-                                        className="w-full border border-gray-300 p-2 rounded mb-3"
-                                    />
-                                </>
-                            )}
-                            {field.type === "dropdown" && (
-                                <>
-                                    <input
-                                        type="text"
-                                        placeholder="Field Label"
-                                        value={field.label}
-                                        onChange={(e) => updateField(field.id, "label", e.target.value)}
-                                        className="w-full border border-gray-300 p-2 rounded mb-3"
-                                    />
-                                    <textarea
-                                        placeholder="Dropdown Options (comma-separated)"
-                                        value={field.options.join(", ")}
-                                        onChange={(e) =>
-                                            updateDropdownOptions(
-                                                field.id,
-                                                e.target.value.split(",").map((opt) => opt.trim())
-                                            )
-                                        }
-                                        className="w-full border border-gray-300 p-2 rounded"
-                                    ></textarea>
-                                </>
-                            )}
-                            <button
-                                onClick={() => removeField(field.id)}
-                                className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                            >
-                                <FaTrashAlt />
-                            </button>
-                        </div>
-                    ))}
+
+                    {/* Fields container */}
+                    <div className="max-h-[calc(100vh-400px)] overflow-y-auto">
+                        {fields.map((field) => (
+                            <div key={field.id} className="p-3 sm:p-4 mb-4 border rounded shadow-sm relative">
+                                {field.type === "text" && (
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Field Name"
+                                            value={field.name}
+                                            onChange={(e) => updateField(field.id, "name", e.target.value)}
+                                            className="w-full border border-gray-300 p-2 rounded mb-3"
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Field Label"
+                                            value={field.label}
+                                            onChange={(e) => updateField(field.id, "label", e.target.value)}
+                                            className="w-full border border-gray-300 p-2 rounded mb-3"
+                                        />
+                                    </>
+                                )}
+
+                                {field.type === "number" && (
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Field Name"
+                                            value={field.name}
+                                            onChange={(e) => updateField(field.id, "name", e.target.value)}
+                                            className="w-full border border-gray-300 p-2 rounded mb-3"
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Field Label"
+                                            value={field.label}
+                                            onChange={(e) => updateField(field.id, "label", e.target.value)}
+                                            className="w-full border border-gray-300 p-2 rounded mb-3"
+                                        />
+                                    </>
+                                )}
+
+                                {field.type === "dropdown" && (
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Field Label"
+                                            value={field.label}
+                                            onChange={(e) => updateField(field.id, "label", e.target.value)}
+                                            className="w-full border border-gray-300 p-2 rounded mb-3"
+                                        />
+                                        <textarea
+                                            placeholder="Dropdown Options (comma-separated)"
+                                            value={field.options.join(", ")}
+                                            onChange={(e) =>
+                                                updateDropdownOptions(
+                                                    field.id,
+                                                    e.target.value.split(",").map((opt) => opt.trim())
+                                                )
+                                            }
+                                            className="w-full border border-gray-300 p-2 rounded"
+                                        />
+                                    </>
+                                )}
+
+                                <button
+                                    onClick={() => removeField(field.id)}
+                                    className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                                    aria-label="Remove field"
+                                >
+                                    <FaTrashAlt />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Right Panel */}
-                <div className="w-2/3 bg-white p-6 rounded shadow-lg">
-                    <h2 className="text-xl font-bold mb-4">{heading || "Form Preview"}</h2>
+                <div className="w-full lg:w-2/3 bg-white p-4 sm:p-6 rounded shadow-lg">
+                    <h2 className="text-lg sm:text-xl font-bold mb-4">{heading || "Form Preview"}</h2>
+
                     {fields.length === 0 ? (
                         <p className="text-gray-500">Your form preview will appear here.</p>
                     ) : (
                         <form className="space-y-4">
                             {fields.map((field) => (
-                                <div key={field.id}>
+                                <div key={field.id} className="w-full">
                                     <label className="block text-gray-700 font-bold mb-2">{field.label}</label>
-                                    {field.type === "text" &&
+
+                                    {field.type === "text" && (
                                         <input
                                             type="text"
                                             name={field.name}
-                                            className="border border-gray-300 rounded px-4 py-2 w-full"
+                                            className="border border-gray-300 rounded px-3 sm:px-4 py-2 w-full"
                                             readOnly
                                         />
-                                    }
-                                    {field.type === "number" &&
+                                    )}
+
+                                    {field.type === "number" && (
                                         <input
                                             type="number"
                                             name={field.name}
-                                            className="border border-gray-300 rounded px-4 py-2 w-full"
+                                            className="border border-gray-300 rounded px-3 sm:px-4 py-2 w-full"
                                             readOnly
-                                        />}
+                                        />
+                                    )}
 
-
-                                    {field.type === "dropdown" && <select
-                                        name={field.name}
-                                        className="border border-gray-300 rounded px-4 py-2 w-full"
-                                        readOnly
-                                    >
-                                        {field.options.map((option, index) => (
-                                            <option key={index} value={option}>
-                                                {option}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    }
+                                    {field.type === "dropdown" && (
+                                        <select
+                                            name={field.name}
+                                            className="border border-gray-300 rounded px-3 sm:px-4 py-2 w-full"
+                                            readOnly
+                                        >
+                                            {field.options.map((option, index) => (
+                                                <option key={index} value={option}>
+                                                    {option}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
                                 </div>
                             ))}
                         </form>
                     )}
+
                     <button
                         type="button"
                         onClick={generateHTML}
-                        className="bg-green-500 text-white px-4 py-2 mt-4 rounded hover:bg-green-600"
+                        className="bg-green-500 text-white px-4 py-2 mt-6 rounded hover:bg-green-600 w-full sm:w-auto"
                     >
                         Generate Form
                     </button>
