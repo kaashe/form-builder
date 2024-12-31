@@ -249,7 +249,7 @@ const FormDesigner = () => {
                         <p className="text-gray-500">Your form preview will appear here.</p>
                     ) : (
                         <form className="space-y-4">
-                            {fields.map((field) => (
+                            {fields?.map((field) => (
                                 <div key={field.id} className="w-full">
                                     <label className="block text-gray-700 font-bold mb-2">{field.label}</label>
 
@@ -277,7 +277,7 @@ const FormDesigner = () => {
                                             className="border border-gray-300 rounded px-3 sm:px-4 py-2 w-full"
                                             readOnly
                                         >
-                                            {field.options.map((option, index) => (
+                                            {field.options?.map((option, index) => (
                                                 <option key={index} value={option}>
                                                     {option}
                                                 </option>
