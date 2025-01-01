@@ -291,8 +291,9 @@ const FormDesigner = () => {
 
                     <button
                         type="button"
+                        disabled={fields.length === 0}
                         onClick={generateHTML}
-                        className="bg-green-500 text-white px-4 py-2 mt-6 rounded hover:bg-green-600 w-full sm:w-auto"
+                        className={`disabled:opacity-40 bg-green-500 text-white px-4 py-2 mt-6 rounded hover:bg-green-600 w-full sm:w-auto`}
                     >
                         Generate Form
                     </button>
